@@ -26,7 +26,7 @@ compile_notebook () {
             --source-ref ${refs} \
             --remote https://github.com/${remote} \
             --command "python3 -m pip install --quiet nbformat notedown jupyter_client ipykernel && \
-                       python3 /gluon-nlp/docs/md2ipynb.py ${MDFILE}" 2>&1 | tee $LOGNAME >/dev/null
+                       python3 /gluon-nlp/docs/md2ipynb.py ${MDFILE}" 2>&1 | tee $LOGNAME
 
     BATCH_EXIT_CODE=$?
 
