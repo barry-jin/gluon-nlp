@@ -48,5 +48,6 @@ compile_notebook () {
 }
 
 for f in $(find docs/examples -type f -name '*.md' -print); do \
-    compile_notebook "$f" & \
+    compile_notebook "$f" & ; \
+    wait; \
 done;
