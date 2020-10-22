@@ -45,9 +45,10 @@ jobs:
                                              --name GluonNLP-GPU-Test-${{ github.ref }} \
                                              --source-ref ${{ github.ref }} \
                                              --work-dir . \
+                                             --saved-output codecov \
                                              --save-path temp \
                                              --remote https://github.com/${{ github.repository }} \
-                                             --command "python3 -m pytest --cov=. --cov-config=./.coveragerc --cov-report=xml --durations=50 --device="gpu" --runslow ./tests/" \
+                                             --command "python3 -m pytest --cov=. --cov-config=./.coveragerc --cov-report=xml:codecov --durations=50 --device="gpu" --runslow ./tests/" \
                                              --wait | tee > batch_job.log  
 
 
@@ -60,9 +61,10 @@ jobs:
                                              --name GluonNLP-GPU-Test-PR#${{ github.event.number }} \
                                              --source-ref ${{ github.event.pull_request.head.ref }} \
                                              --work-dir . \
+                                             --saved-output codecov \
                                              --save-path temp \
                                              --remote https://github.com/${{ github.event.pull_request.head.repo.full_name }} \
-                                             --command "python3 -m pytest --cov=. --cov-config=./.coveragerc --cov-report=xml --durations=50 --device="gpu" --runslow ./tests/" \
+                                             --command "python3 -m pytest --cov=. --cov-config=./.coveragerc --cov-report=xml:codecov --durations=50 --device="gpu" --runslow ./tests/" \
                                              --wait | tee > batch_job.log
 
       - name: Wait for job and copy files from AWS s3
