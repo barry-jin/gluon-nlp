@@ -27,7 +27,7 @@ jobs:
       - name: Install Other Dependencies
         run: |
           python -m pip install --quiet --upgrade pip
-          python -m pip install --quiet -e .[extras]
+          python -m pip install --quiet -e .[dev]
 
       - name: flake8 check
         run: |
