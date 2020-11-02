@@ -16,7 +16,6 @@ import recommonmark
 import sphinx_gallery
 from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
-from sphinx_markdown_tables import __version__
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -241,7 +240,6 @@ def setup(app):
     app.add_js_file('install-options.js')
     app.add_css_file('custom.css')
     return {
-        'version': __version__,
         'parallel_read_safe': True
     }
 
