@@ -240,6 +240,7 @@ def setup(app):
     app.add_js_file('install-options.js')
     app.add_css_file('custom.css')
     return {
+        'version': __version__,
         'parallel_read_safe': True
     }
 
