@@ -16,6 +16,14 @@ import recommonmark
 import sphinx_gallery
 from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
+import warnings
+
+warnings.filterwarnings("ignore", category=UserWarning,
+                        message='the mxtheme extension does not declare if it is safe for parallel reading, assuming it isn\'t -'
+                        ' please ask the extension author to check and make it explicit')
+
+warnings.filterwarnings("ignore", category=UserWarning,
+                        message="doing serial read")
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -239,9 +247,6 @@ def setup(app):
     app.add_js_file('hidebib.js')
     app.add_js_file('install-options.js')
     app.add_css_file('custom.css')
-    return {
-        'parallel_read_safe': True
-    }
 
 
 sphinx_gallery_conf = {
