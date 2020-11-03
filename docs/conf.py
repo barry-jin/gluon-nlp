@@ -247,6 +247,11 @@ def setup(app):
     app.add_js_file('hidebib.js')
     app.add_js_file('install-options.js')
     app.add_css_file('custom.css')
+    return dict(
+        version="unknown version",
+        parallel_read_safe=True,
+        parallel_write_safe=True
+    )
 
 
 sphinx_gallery_conf = {
