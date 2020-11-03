@@ -18,11 +18,11 @@ from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
 import warnings
 
-warnings.filterwarnings("ignore", category=UserWarning,
+warnings.filterwarnings("ignore", category=Warning,
                         message='the mxtheme extension does not declare if it is safe for parallel reading, assuming it isn\'t -'
                         ' please ask the extension author to check and make it explicit')
 
-warnings.filterwarnings("ignore", category=UserWarning,
+warnings.filterwarnings("ignore", category=Warning,
                         message="doing serial read")
 
 # If extensions (or modules to document with autodoc) are in another directory,
