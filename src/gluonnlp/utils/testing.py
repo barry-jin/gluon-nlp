@@ -206,7 +206,7 @@ def _cast_nested_to_fp16(nested_dat):
 
 
 def verify_backbone_fp16(model_cls, cfg, ctx, inputs,
-                         atol=1E-2, rtol=1E-2, check_amp=True):
+                         atol=1E-2, rtol=1E-2, check_amp=False):
     """Test whether the backbone model has the comparable parameter gradient +
 
     Parameters
