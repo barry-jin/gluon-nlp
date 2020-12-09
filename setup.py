@@ -32,7 +32,7 @@ if VERSION.endswith('dev'):
 
 
 requirements = [
-    'numpy<1.20.0',
+    'numpy',
     'sacremoses>=0.0.38',
     'yacs>=0.1.6',
     'sacrebleu',
