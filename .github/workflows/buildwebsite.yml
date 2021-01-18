@@ -50,7 +50,7 @@ jobs:
                                              --save-path tutorials \
                                              --command "python -m pip install --quiet -e .[web] && \
                                                         ./tools/batch/batch_states/compile_notebooks.sh \
-                                                        'master' ${GITHUB_REF##*/}" \
+                                                        'push' ${GITHUB_REF##*/}" \
                                              --wait | tee build_website.log
 
       - name: Build Website (For pull request)
