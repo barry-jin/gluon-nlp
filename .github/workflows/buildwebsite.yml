@@ -59,11 +59,11 @@ jobs:
           python ./tools/batch/submit-job.py --region us-east-1 \
                                              --job-type g4dn.4x \
                                              --name GluonNLP-Website-${{ github.ref }} \
+                                             --remote https://github.com/${{ github.repository }} \
                                              --source-ref ${{ github.ref }} \
                                              --work-dir . \
                                              --saved-output docs/tutorials \
                                              --save-path tutorials \
-                                             --remote https://github.com/${{ github.repository }} \
                                              --command "python -m pip install setuptools ipython sphinx>=1.5.5 \ 
                                                         sphinx-gallery nbsphinx sphinx_rtd_theme mxtheme \
                                                         sphinx-autodoc-typehints matplotlib Image \
@@ -79,11 +79,11 @@ jobs:
           python ./tools/batch/submit-job.py --region us-east-1 \
                                              --job-type g4dn.4x \
                                              --name GluonNLP-Website-${{ github.ref }} \
+                                             --remote https://github.com/${{ github.repository }} \
                                              --source-ref ${{ github.ref }} \
                                              --work-dir . \
                                              --saved-output docs/tutorials \
                                              --save-path tutorials \
-                                             --remote https://github.com/${{ github.repository }} \
                                              --command "python -m pip install setuptools ipython sphinx>=1.5.5 \ 
                                                         sphinx-gallery nbsphinx sphinx_rtd_theme mxtheme \
                                                         sphinx-autodoc-typehints matplotlib Image \

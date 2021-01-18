@@ -1,11 +1,6 @@
 #!/bin/bash
 # Shell script for submitting AWS Batch jobs to compile notebooks
 
-# prnumber=$1
-# runnumber=$2
-# remote=$3
-# refs=$4
-
 event=$1
 ref=$2
 
@@ -17,42 +12,18 @@ compile_notebook () {
     BASENAME=$(basename $MDFILE)
     TARGETNAME=$(dirname $MDFILE)/${BASENAME%.md}.ipynb
     LOGNAME=$(dirname $MDFILE)/${BASENAME%.md}.stdout.log
-    # JOBIDLOG=${BASENAME%.md}.jobid.log
 
     echo Compiling $BASENAME ...
 
     python3 docs/md2ipynb.py ${MDFILE} > $LOGNAME
-    # python3 tools/batch/submit-job.py --region us-east-1 \
-    #         --wait \
-    #         --timeout 3600 \
-    #         --saved-output docs/tutorials \
-    #         --name GluonNLP-Docs-${refs}-${prnumber}-${runnumber} \
-    #         --save-path ${runnumber}/gluon-nlp/docs/tutorials \
-    #         --work-dir . \
-    #         --source-ref ${refs} \
-    #         --remote https://github.com/${remote} \
-    #         --command "python3 -m pip install --quiet nbformat notedown jupyter_client ipykernel \
-    #                    ipykernel matplotlib termcolor && \
-    #                    python3 docs/md2ipynb.py ${MDFILE}" > $LOGNAME
-
-    # BATCH_EXIT_CODE=$?
 
     EXIT_CODE=$?
 
-    # head -100 $LOGNAME | grep -oP -m 1 'jobId: \K(.*)' > $JOBIDLOG
-
-    # JOBID=$(cat "$JOBIDLOG")
-
-    # if [ $BATCH_EXIT_CODE -ne 0 ]; then
     if [ $EXIT_CODE -ne 0 ]; then
         echo Compiling $BASENAME Failed, please download Notebook_Logs in build Artifacts for more details.
     else
         echo Compiling $BASENAME Succeeded
-        # aws s3api wait object-exists --bucket gluon-nlp-dev \
-        #     --key batch/$JOBID/${runnumber}/gluon-nlp/$TARGETNAME
-        # aws s3 cp s3://gluon-nlp-dev/batch/$JOBID/${runnumber}/gluon-nlp/$TARGETNAME $TARGETNAME --quiet
     fi
-    # exit $BATCH_EXIT_CODE
     exit $EXIT_CODE
 }
 
@@ -72,16 +43,17 @@ if [ "$FAIL" == "0" ]; then
     make docs_local
     EXIT_CODE=$?
     if [ $EXIT_CODE -ne 0 ]; then
-        echo Building Website Failed. 
+        echo Building Website Failed.
+        exit $EXIT_CODE
     else
-        echo Building Website
-    fi
-    if [ "$1" == "push" ]; then
-        echo "Uploading docs to s3://gluon-nlp/$2/"
-        aws s3 sync --delete ./docs/_build/html/ s3://gluon-nlp/$2/ --acl public-read
-    else
-        echo "Uploading docs to s3://gluon-nlp-staging/PR$1/$2/"
-        aws s3 sync --delete ./docs/_build/html/ s3://gluon-nlp-staging/PR$1/$2/ --acl public-read
+        echo Building Website Succeeded.
+        if [ "$1" == "push" ]; then
+            echo "Uploading docs to s3://gluon-nlp/$2/"
+            aws s3 sync --delete ./docs/_build/html/ s3://gluon-nlp/$2/ --quiet --acl public-read
+        else
+            echo "Uploading docs to s3://gluon-nlp-staging/PR$1/$2/"
+            aws s3 sync --delete ./docs/_build/html/ s3://gluon-nlp-staging/PR$1/$2/ --quiet --acl public-read
+        fi
     fi
 else
     exit 1
