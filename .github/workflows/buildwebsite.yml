@@ -50,7 +50,7 @@ jobs:
                                              --save-path tutorials \
                                              --command "python -m pip install --quiet -e .[web] && \
                                                         ./tools/batch/batch_states/compile_notebooks.sh \
-                                                        'master' ${GITHUB_REF##*/}"
+                                                        'master' ${GITHUB_REF##*/}" \
                                              --wait | tee build_website.log
 
       - name: Build Website (For pull request)
@@ -66,7 +66,7 @@ jobs:
                                              --save-path tutorials \
                                              --command "python -m pip install --quiet -e .[web] && \
                                                         ./tools/batch/batch_states/compile_notebooks.sh \
-                                                        ${{ github.event.number }} ${{ github.event.pull_request.head.sha }}"
+                                                        ${{ github.event.number }} ${{ github.event.pull_request.head.sha }}" \
                                              --wait | tee build_website.log
 
       - name: Wait for job and copy logs from AWS s3
