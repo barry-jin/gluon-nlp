@@ -9,7 +9,7 @@ mx.npx.set_np()
 
 
 MODELS = [
-    'google_en_uncased_bert_base'
+    'google_en_uncased_bert_base',
     'google_en_uncased_bert_large',
     # 'google_albert_base_v2',
     'google_albert_large_v2',
