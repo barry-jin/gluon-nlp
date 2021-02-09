@@ -678,7 +678,7 @@ class GluonNLPBackboneBenchmark:
     to compare memory and time performance of models in Transformers.
     """
     def __init__(self, workloads, model_names, use_fp16=False,
-                 repeat=3, use_gpu=True,
+                 repeat=50, use_gpu=True,
                  device_idx=0,
                  profile_inference=True,
                  profile_train=True,
