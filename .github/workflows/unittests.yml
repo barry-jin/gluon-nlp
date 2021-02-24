@@ -13,15 +13,9 @@ jobs:
       fail-fast: false
       matrix:
         # TODO Add windows test by using "windows-latest"
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
         python-version: [ '3.6', '3.7', '3.8']
-        exclude:
-          - os: macos-latest
-            python-version: 3.6
-          - os: macos-latest
-            python-version: 3.8
-          - os: ubuntu-latest
-            python-version: 3.7
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -36,27 +30,23 @@ jobs:
           # ${{ runner.os }}-ccache-${{ github.sha }} exists
           restore-keys: |
             ${{ runner.os }}-ccache
+
       - name: Setup Miniconda
         uses: conda-incubator/setup-miniconda@v2.0.0
         with:
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}
 
+      - name: Sanity Check
+        shell: bash -l {0}
+        run: |
+          source ci/prepare_clean_env.sh cpu/py3
+          make lintdir=src/gluonnlp lint
+
       - name: Unittest
         shell: bash -l {0}
         run: |
-          conda env update --prune -p conda/cpu/py3 -f env/cpu/py3.yml
-          conda activate ./conda/cpu/py3
-          conda list
-          printenv
-          python -m pip install --upgrade pip
-          python -m pip install setuptools pytest pytest-cov contextvars
-          python -m pip install cmake
-          python -m pip install -v -e .
-          python -m pip install horovod --no-cache-dir -U
-          python -m spacy download en
-          python -m spacy download de
-          python -m nltk.downloader all
+          source ci/prepare_clean_env.sh cpu/py3
           pytest -n 4 -m 'not (gpu or serial)' --durations=30 --cov=./ --cov-report=xml tests/unittest
 
       - name: Upload coverage to Codecov
