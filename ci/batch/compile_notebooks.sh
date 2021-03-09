@@ -29,6 +29,8 @@ compile_notebook () {
 
 pids=()
 
+mkdir docs/tutorials
+mv docs/examples/* docs/tutorials
 for f in $(find docs/tutorials -type f -name '*.md' -print); do
     compile_notebook "$f" &
     pids+=($!)
